@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🎯 What requirements did you achieve?
+All the requirements, apart from a couple stretch goals.
 
-## Getting Started
+🎯 Were there any requirements or goals that you were unable to achieve?
+Just a few stretch goals like eiditing my profile after creation, and likes and follows.
 
-First, run the development server:
+🎯 If so, what was it that you found difficult about these tasks?
+I didn't have enough brainpower, time, energy and I would've probably needed help on the SQL.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Overall, this has been the hardest yet most rewarding project. Unlike my previous assignemnt, I understood 'use client' and 'use server' way more, so I 
+didn't need a seperate 'actions.js' file. I also felt I understood the SQL joining and selecting and Array Agg alot more. It was a lot more complex now 
+with clerk, but I have grasped the conept of clerk producing a unique ID for each user I can then use that unique identifier to access each users name, bio etc
+in my users table. And also using Auth to get the userID/ClerkID was very useful!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+I also styled everyhting using tailwind, and some new things I learnt/implemented were:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+.isArray()
+revalidatepath
+RADIX UI - MODAL
+(I did manage to do the raidx UI, essentially if the user logs into clerk but doesnt create a profile, the sign in modal shows up and takes the user to the profile)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+HERE IT IS IN CASE IT DOESN'T SHOW UP AS IT ISN'T NEEDED:
+//My radix ui component, using react dialog
 
-## Learn More
+// components/SignInModal.js
+'use client';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useRouter } from 'next/navigation';
 
-To learn more about Next.js, take a look at the following resources:
+const SignInModal = () => {
+    const router = useRouter();
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    return (
+        <Dialog.Root open>
+        <Dialog.Trigger style={{ display: 'none' }} />
+        <Dialog.Overlay style={overlayStyles} />
+        <Dialog.Content style={modalStyles}>
+            <Dialog.Title>You need to sign in first</Dialog.Title>
+            <Dialog.Description>Please sign in to access this content.</Dialog.Description>
+            <button
+            onClick={() => {
+                router.push('/profile'); // Redirect to the profile page
+            }}
+            >
+            Go to Profile
+            </button>
+        </Dialog.Content>
+        </Dialog.Root>
+    );
+    };
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    // Style for the modal and overlay (customize as needed)
+    const overlayStyles = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 999,
+    };
 
-## Deploy on Vercel
+    const modalStyles = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'white',
+    padding: '20px',
+    borderRadius: '10px',
+    boxShadow: '0 0 15px rgba(0, 0, 0, 0.3)',
+    zIndex: 1000,
+};
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+export default SignInModal;
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
